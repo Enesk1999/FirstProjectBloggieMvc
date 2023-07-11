@@ -1,0 +1,81 @@
+﻿@model BloggieMvc.Models.ViewModels.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="container col-xxl-8 px-4 py-5">
+    <h1 class="display-4">Hoşgeldiniz</h1>
+    <hr />
+    <div class="row align-items-center g-5 py-5">
+        <div class="col-12 col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">
+                Bloggie -The Dev Blog
+            </h1>
+            @*Resim görüntüleri https://www.pexels.com/tr-tr/*@
+            <p class="lead">
+                Blog sayfamız sizlere kod paylaşımları yaparak
+                gündeme takip etmenizi sağlar. Güncel web yazılımlarında
+                HTML, CSS, Javascript, Asp.Net, C#, Angular gibi. web ile
+                alakalı yazılım konularını sunar. Daha fazlası için takip etmeyi
+                unutmayın...
+            </p>
+        </div>
+        <div class="col-12 col-lg-6">
+            <img src="https://images.pexels.com/photos/1714341/pexels-photo-1714341.jpeg?auto=compress&cs=tinysrgb&w=600"
+                 alt="Bloggie - Dev Blogs"
+                 class="d-block mx-lg-auto img-fluid" width="400">
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row justify-content-lg-center">
+        <div class="col-6">
+            @if(Model != null && Model.BlogPosts.Any())
+            {
+                @foreach(var item in Model.Tags)
+                {
+                    <span class="badge bg-warning">@item.Name</span>   
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            @if(Model !=null && Model.BlogPosts.Any())
+            {
+                @foreach(var blogs in Model.BlogPosts)
+                {
+                    <div class="mb-5 bg-light box-shadow p-3">
+                        <img src="@blogs.FeaturedImageUrl" alt="@blogs.Heading" class="mb-2 d-block img-fluid">
+                    
+                    <h2 class="mb-4">@blogs.Heading</h2>
+                    <p class="mb-4">
+                        Author: @blogs.Author
+                        <br>
+                        Published Date: @blogs.PublishedDate.ToShortDateString()
+                    </p>
+                    <p class="mb-4">
+                            @foreach(var tags in blogs.Tags)
+                            {
+                                <span class="badge me-1" style="background-color:purple;">@tags.Name</span>
+                            }
+                     </p>
+
+                    <p class="mb-4">@blogs.ShortDescription</p>
+                    <a class="btn btn-dark" asp-area="" asp-controller="Blogs" asp-action="Index" asp-route-urlHandle="@blogs.UrlHandle" >Devamını Oku</a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
